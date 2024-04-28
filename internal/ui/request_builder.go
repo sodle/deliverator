@@ -16,6 +16,7 @@ func newRequestBuilder(request *request.Request) *fyne.Container {
 	name := binding.BindString(&request.Name)
 	method := binding.BindString(&request.Method)
 	url := binding.BindString(&request.Url)
+  body := binding.BindString(&request.Body)
 
 	nameField := widget.NewEntryWithData(name)
 
@@ -37,6 +38,9 @@ func newRequestBuilder(request *request.Request) *fyne.Container {
 
 	urlField := widget.NewEntryWithData(url)
 
+  bodyField := widget.NewMultiLineEntry()
+  bodyField.Bind(body)
+
   output := widget.NewLabel("")
 
 	rb := container.NewBorder(
@@ -47,6 +51,9 @@ func newRequestBuilder(request *request.Request) *fyne.Container {
 				methodField, nil,
 				urlField,
 			),
+      container.NewAppTabs(
+        container.NewTabItem("Body", bodyField),
+      ),
 			widget.NewButton("Send", func() {
         go func() {
           response, _ := request.Send()
