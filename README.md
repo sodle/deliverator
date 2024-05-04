@@ -1,11 +1,7 @@
-# deliverator
-An impractically-simple REST GUI implemented in Go
+# Tauri + Svelte + Typescript
 
-## Requirements
-- Go 1.22.2
-- A computer (it should be cross-platform but I've only tested it on Mac)
+This template should help get you started developing with Tauri, Svelte and TypeScript in Vite.
 
-## Running the thing
-```bash
-go run ./cmd/deliverator.go
-```
+## Recommended IDE Setup
+
+[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
