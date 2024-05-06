@@ -46,7 +46,7 @@
     padding: 1em;
     margin-bottom: 0.5em;
   }
-  .request-list-item>div {
+  .request-list-item > div {
     user-select: none;
     box-sizing: border-box;
     height: auto;
