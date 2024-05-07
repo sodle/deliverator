@@ -1,4 +1,5 @@
 <script lang="ts">
+  import {Sidebar} from "flowbite-svelte";
   import { Request } from "./Request.svelte";
 
   export let requests: Request[];
@@ -7,7 +8,7 @@
   export let addHandler: () => void;
 </script>
 
-<div id="request-list">
+<Sidebar class="w-1/3">
   {#each requests as request, i}
     <a
       class={selectedIndex == i
@@ -26,19 +27,9 @@
   <a class="request-list-item add" on:click={() => addHandler()} href="#add">
     <div>+ New request</div>
   </a>
-</div>
+</Sidebar>
 
 <style>
-  #request-list {
-    flex: 1;
-    flex-basis: 25vw;
-    border-right: 2px solid white;
-    padding: 1em;
-    height: 100vh;
-    box-sizing: border-box;
-    overflow: auto;
-  }
-
   .request-list-item {
     display: block;
     border: 1px solid darkgray;

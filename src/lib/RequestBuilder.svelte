@@ -1,4 +1,20 @@
 <script lang="ts">
+  import {
+    Button,
+    Input,
+    Label,
+    Select,
+    TabItem,
+    Table,
+    TableBody,
+    TableBodyCell,
+    TableBodyRow,
+    TableHead,
+    TableHeadCell,
+    Tabs,
+    Textarea,
+  } from "flowbite-svelte";
+
   import { Request, HttpVerb, Header } from "./Request.svelte";
   import { type ResponseType, type Response } from "@tauri-apps/api/http";
 
@@ -6,96 +22,91 @@
   let response: Response<ResponseType.Text> | undefined;
 </script>
 
-<div id="request-builder">
+<main class="m-5 w-2/3">
   {#if request}
-    <div class="row">
-      <fieldset id="fieldset-name">
-        <label for="request-name">Name</label>
-        <input
-          bind:value={request.name}
-          id="request-name"
-          name="request-name"
-        />
-      </fieldset>
+    <div class="flex w-full">
+      <Label for="name" class="block w-full">
+        <span class="sr-only">Name</span>
+        <Input placeholder="Name" id="name" bind:value={request.name} />
+      </Label>
     </div>
-    <div class="row">
-      <fieldset id="fieldset-method">
-        <label for="request-method">Method</label>
-        <select
-          bind:value={request.method}
-          id="request-method"
-          name="request-method"
-        >
-          {#each Object.keys(HttpVerb) as verb}
-            <option>{verb}</option>
-          {/each}
-        </select>
-      </fieldset>
-      <fieldset id="fieldset-url">
-        <label for="request-url">URL</label>
-        <input bind:value={request.url} name="request-url" id="request-url" />
-      </fieldset>
-      <fieldset id="fieldset-send">
-        <button
-          on:click={() => {
-            request.send().then((r) => (response = r));
-          }}>Send</button
-        >
-      </fieldset>
+    <div class="flex w-full mt-3 mb-3">
+      <Label for="method" class="sr-only">Method</Label>
+      <Select
+        class="w-1/5 rounded-e-none"
+        id="method"
+        placeholder="Method"
+        bind:value={request.method}
+        items={Object.keys(HttpVerb).map((v) => {
+          return { name: v, value: v };
+        })}
+      />
+      <Label for="url" class="sr-only">URL</Label>
+      <Input class="w-3/5 rounded-none" id="url" placeholder="URL" bind:value={request.url} />
+      <Button
+        class="w-1/5 rounded-s-none"
+        on:click={() => {
+          request.send().then((r) => (response = r));
+        }}
+      >
+        Send
+      </Button>
     </div>
-    <div class="row">
-      <fieldset id="fieldset-headers">
-        <label for="fieldset-headers">Headers</label>
-        {#each request.headers as header, i}
-          <div class="row">
-            <fieldset id={"fieldset-header-" + i + "-key"}>
-              <label for={"key-" + i}>Name</label>
-              <input
-                id={"key-" + i}
-                name={"key-" + i}
-                bind:value={header.name}
-              />
-            </fieldset>
-            <fieldset id={"fieldset-header-" + i + "-value"}>
-              <label for={"value-" + i}>Value</label>
-              <input
-                id={"value-" + i}
-                name={"value-" + i}
-                bind:value={header.value}
-              />
-            </fieldset>
-            <fieldset>
-              <button
-                on:click={() => {
-                  request.headers.splice(i, 1);
-                  request.headers = request.headers;
-                }}>Delete</button
-              >
-            </fieldset>
-          </div>
-        {/each}
-        <div class="row">
-          <button
-            on:click={() => {
-              request.headers.push(new Header("", ""));
-              request.headers = request.headers;
-            }}>+ Add header</button
-          >
-        </div>
-      </fieldset>
-    </div>
-    <div class="row">
-      <fieldset id="fieldset-body">
-        <label for="request-body">Request body</label>
-        <textarea
-          id="request-body"
-          name="request-body"
-          bind:value={request.body}
-          rows="10"
-        />
-      </fieldset>
-    </div>
-    <hr />
+    <Tabs
+      tabStyle="full"
+      defaultClass="flex rounded-lg divide-x rtl:divide-x-reverse"
+    >
+      <TabItem open title="Headers" class="w-full">
+        <Table>
+          <TableHead>
+            <TableHeadCell class="ps-2 pe-0">Name</TableHeadCell>
+            <TableHeadCell class="ps-2 pe-0">Value</TableHeadCell>
+            <TableHeadCell class="ps-2 pe-0">
+              <span class="sr-only">Delete</span>
+            </TableHeadCell>
+          </TableHead>
+          <TableBody>
+            {#each request.headers as header, i}
+              <TableBodyRow>
+                <TableBodyCell class="p-0">
+                  <Input class="rounded-none" bind:value={header.name} />
+                </TableBodyCell>
+                <TableBodyCell class="p-0">
+                  <Input class="rounded-none" bind:value={header.value} />
+                </TableBodyCell>
+                <TableBodyCell class="p-0">
+                  <Button class="block w-full rounded-none border border-gray-600"
+                    on:click={() => {
+                      request.headers.splice(i, 1);
+                      request.headers = request.headers;
+                    }}
+                  >
+                    X
+                  </Button>
+                </TableBodyCell>
+              </TableBodyRow>
+            {/each}
+            <TableBodyRow>
+              <TableBodyCell colspan="3" class="p-0">
+                <Button
+                  class="block w-full h-full rounded-none border border-t-0 border-gray-600"
+                  on:click={() => {
+                    request.headers.push(new Header("", ""));
+                    request.headers = request.headers;
+                  }}
+                >
+                  + Add Header
+                </Button>
+              </TableBodyCell>
+            </TableBodyRow>
+          </TableBody>
+        </Table>
+      </TabItem>
+      <TabItem title="Body" class="w-full">
+        <Textarea class="block w-full" rows="7" bind:value={request.body} />
+      </TabItem>
+    </Tabs>
+    <hr class="mb-5 mt-5" />
     {#if response}
       <div id="response-window">
         <p>Status: {response.status}</p>
@@ -116,62 +127,4 @@
   {:else}
     <p>No request selected.</p>
   {/if}
-</div>
-
-<style>
-  #request-builder {
-    flex: 3;
-    flex-basis: 75vw;
-    padding: 1em;
-    height: 100vh;
-    overflow: auto;
-    box-sizing: border-box;
-  }
-
-  #response-window {
-    text-align: left;
-  }
-
-  fieldset {
-    flex: 1 1 auto;
-    border: none;
-  }
-
-  label {
-    display: block;
-    text-align: left;
-  }
-
-  input,
-  select,
-  button,
-  textarea {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  select {
-    background-color: black;
-    color: white;
-    font-size: 1em;
-    /* appearance: none; */
-    border: none;
-    padding: 0.8em 1.2em;
-  }
-
-  button {
-    height: 100%;
-  }
-
-  textarea {
-    background: black;
-    color: white;
-    font-size: 1em;
-    font-family: monospace;
-  }
-
-  #fieldset-url {
-    flex-basis: 100%;
-  }
-</style>
+</main>

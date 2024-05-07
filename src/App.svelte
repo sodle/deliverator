@@ -22,14 +22,12 @@
   }
 </script>
 
-<main class="container">
-  <div class="row">
-    <RequestList
-      {requests}
-      bind:selectedIndex
-      deleteHandler={deleteRequest}
-      addHandler={createRequest}
-    />
-    <RequestBuilder bind:request={requests[selectedIndex]} />
-  </div>
+<main class="flex h-screen bg-white dark:bg-black">
+  <RequestList
+    {requests}
+    bind:selectedIndex
+    deleteHandler={deleteRequest}
+    addHandler={createRequest}
+  />
+  <RequestBuilder bind:request={requests[selectedIndex]} />
 </main>
