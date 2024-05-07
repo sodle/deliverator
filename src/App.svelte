@@ -1,6 +1,4 @@
 <script lang="ts">
-  import "./app.css";
-
   import RequestList from "./lib/RequestList.svelte";
   import RequestBuilder from "./lib/RequestBuilder.svelte";
   import { confirm } from "@tauri-apps/api/dialog";
@@ -31,7 +29,7 @@
       bind:selectedIndex
       deleteHandler={deleteRequest}
       addHandler={createRequest}
-    ></RequestList>
-    <RequestBuilder bind:request={requests[selectedIndex]}></RequestBuilder>
+    />
+    <RequestBuilder bind:request={requests[selectedIndex]} />
   </div>
 </main>
