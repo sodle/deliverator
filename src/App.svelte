@@ -22,7 +22,7 @@
   }
 </script>
 
-<main class="flex h-screen bg-white dark:bg-black">
+<main class="flex overflow-hidden h-screen bg-white dark:bg-black">
   <RequestList
     {requests}
     bind:selectedIndex

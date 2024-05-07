@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {Sidebar} from "flowbite-svelte";
+  import { Sidebar } from "flowbite-svelte";
   import { Request } from "./Request.svelte";
 
   export let requests: Request[];
@@ -8,7 +8,7 @@
   export let addHandler: () => void;
 </script>
 
-<Sidebar class="w-1/3">
+<Sidebar class="w-1/3 overflow-auto">
   {#each requests as request, i}
     <a
       class={selectedIndex == i
