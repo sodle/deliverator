@@ -5,18 +5,13 @@
     Label,
     Select,
     TabItem,
-    Table,
-    TableBody,
-    TableBodyCell,
-    TableBodyRow,
-    TableHead,
-    TableHeadCell,
     Tabs,
     Textarea,
   } from "flowbite-svelte";
 
   import { Request, HttpVerb, Header } from "./Request.svelte";
   import { type ResponseType, type Response } from "@tauri-apps/api/http";
+    import HeaderList from "./ui/request/HeaderList.svelte";
 
   export let request: Request | undefined;
   let response: Response<ResponseType.Text> | undefined;
@@ -58,53 +53,7 @@
       </Button>
     </div>
     <Tabs contentClass="m-0">
-      <TabItem open title="Headers">
-        <Table>
-          <TableHead>
-            <TableHeadCell class="pe-0 ps-2">Name</TableHeadCell>
-            <TableHeadCell class="pe-0 ps-2">Value</TableHeadCell>
-            <TableHeadCell class="pe-0 ps-2">
-              <span class="sr-only">Delete</span>
-            </TableHeadCell>
-          </TableHead>
-          <TableBody>
-            {#each request.headers as header, i}
-              <TableBodyRow>
-                <TableBodyCell class="p-0">
-                  <Input class="rounded-none" bind:value={header.name} />
-                </TableBodyCell>
-                <TableBodyCell class="p-0">
-                  <Input class="rounded-none" bind:value={header.value} />
-                </TableBodyCell>
-                <TableBodyCell class="p-0">
-                  <Button
-                    class="block w-full rounded-none border border-gray-600"
-                    on:click={() => {
-                      request.headers.splice(i, 1);
-                      request.headers = request.headers;
-                    }}
-                  >
-                    X
-                  </Button>
-                </TableBodyCell>
-              </TableBodyRow>
-            {/each}
-            <TableBodyRow>
-              <TableBodyCell colspan="3" class="p-0">
-                <Button
-                  class="block h-full w-full rounded-none border border-t-0 border-gray-600 rounded-b-md"
-                  on:click={() => {
-                    request.headers.push(new Header("", ""));
-                    request.headers = request.headers;
-                  }}
-                >
-                  + Add Header
-                </Button>
-              </TableBodyCell>
-            </TableBodyRow>
-          </TableBody>
-        </Table>
-      </TabItem>
+      <HeaderList {request} />
       <TabItem title="Body">
         <Label class="sr-only" for="body">Body</Label>
         <Textarea name="body" class="block w-full rounded-t-none" rows="7" bind:value={request.body} placeholder="Body" />
