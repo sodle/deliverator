@@ -8,10 +8,10 @@
     Tabs,
     Textarea,
   } from "flowbite-svelte";
+  import HeaderList from "./ui/request/HeaderList.svelte";
 
-  import { Request, HttpVerb, Header } from "./Request.svelte";
+  import { Request, HttpVerb } from "./Request.svelte";
   import { type ResponseType, type Response } from "@tauri-apps/api/http";
-    import HeaderList from "./ui/request/HeaderList.svelte";
 
   export let request: Request | undefined;
   let response: Response<ResponseType.Text> | undefined;
@@ -61,7 +61,7 @@
     </Tabs>
     <hr class="mb-5 mt-5" />
     {#if response}
-      <div id="response-window">
+      <div class="text-black dark:text-white" id="response-window">
         <p>Status: {response.status}</p>
         <div>
           <p>Headers:</p>
