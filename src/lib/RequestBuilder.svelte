@@ -92,7 +92,7 @@
             <TableBodyRow>
               <TableBodyCell colspan="3" class="p-0">
                 <Button
-                  class="block h-full w-full rounded-none border border-t-0 border-gray-600"
+                  class="block h-full w-full rounded-none border border-t-0 border-gray-600 rounded-b-md"
                   on:click={() => {
                     request.headers.push(new Header("", ""));
                     request.headers = request.headers;
@@ -106,7 +106,8 @@
         </Table>
       </TabItem>
       <TabItem title="Body">
-        <Textarea class="block w-full" rows="7" bind:value={request.body} />
+        <Label class="sr-only" for="body">Body</Label>
+        <Textarea name="body" class="block w-full rounded-t-none" rows="7" bind:value={request.body} placeholder="Body" />
       </TabItem>
     </Tabs>
     <hr class="mb-5 mt-5" />
