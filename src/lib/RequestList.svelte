@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Button, Sidebar } from "flowbite-svelte";
   import { Request } from "./Request.svelte";
-  import { appWindow } from "@tauri-apps/api/window";
 
   export let requests: Request[];
   export let selectedIndex: number;
@@ -19,7 +18,6 @@
         : "mb-2 block rounded-md border bg-gray-50 p-2 text-black dark:bg-gray-700 dark:text-white"}
       on:click={() => {
         selectedIndex = i;
-        appWindow.setTitle(`${request.name} - Deliverator`);
       }}
       href={"#" + i}
     >
