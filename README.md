@@ -1,12 +1,10 @@
-# Tauri + Svelte + Typescript
-
-This template should help get you started developing with Tauri, Svelte and TypeScript in Vite.
-
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+# Deliverator
+A REST client that isn't trying to sell you something.
 
 ## I just wanna run it
+Grab the latest [release](https://github.com/sodle/deliverator/releases) for your platform.
+
+## Developing
 
 ### Requirements (I think?)
 
