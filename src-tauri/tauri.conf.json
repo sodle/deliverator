@@ -7,7 +7,6 @@
   },
   "package": {
     "productName": "Deliverator",
-    "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
