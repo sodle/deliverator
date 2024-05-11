@@ -18,9 +18,19 @@
 
   import { Request, HttpVerb } from "./Request.svelte";
   import { type ResponseType, type Response } from "@tauri-apps/api/http";
+    import { afterUpdate } from "svelte";
+    import { appWindow } from "@tauri-apps/api/window";
 
   export let request: Request | undefined;
   let response: Response<ResponseType.Text> | undefined;
+
+  afterUpdate(() => {
+    if (request) {
+      appWindow.setTitle(`${request.name} - Deliverator`);
+    } else {
+      appWindow.setTitle("Deliverator: REST Client");
+    }
+  })
 </script>
 
 <main class="m-5 w-2/3 overflow-auto">

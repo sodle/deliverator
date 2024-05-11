@@ -22,12 +22,15 @@
       "http": {
         "request": true,
         "scope": ["https://*", "http://*"]
+      },
+      "window": {
+        "setTitle": true
       }
     },
     "windows": [
       {
-        "title": "deliverator-tauri",
-        "width": 800,
+        "title": "Deliverator",
+        "width": 1000,
         "height": 600
       }
     ],
@@ -37,7 +40,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.sjodle.deliverator",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",

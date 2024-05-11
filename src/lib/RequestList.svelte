@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { Sidebar } from "flowbite-svelte";
+  import { Button, Sidebar } from "flowbite-svelte";
   import { Request } from "./Request.svelte";
+  import { appWindow } from "@tauri-apps/api/window";
 
   export let requests: Request[];
   export let selectedIndex: number;
@@ -8,88 +9,34 @@
   export let addHandler: () => void;
 </script>
 
-<Sidebar class="w-1/3 overflow-auto">
+<Sidebar
+  class="box-border w-1/3 overflow-auto border-0 border-r border-black px-5 py-10 dark:border-white"
+>
   {#each requests as request, i}
     <a
       class={selectedIndex == i
-        ? "request-list-item selected"
-        : "request-list-item"}
-      on:click={() => (selectedIndex = i)}
+        ? "mb-2 block rounded-md border bg-gray-100 p-2 font-bold text-black dark:bg-gray-500 dark:text-white"
+        : "mb-2 block rounded-md border bg-gray-50 p-2 text-black dark:bg-gray-700 dark:text-white"}
+      on:click={() => {
+        selectedIndex = i;
+        appWindow.setTitle(`${request.name} - Deliverator`);
+      }}
       href={"#" + i}
     >
-      <div>
-        <h1>{request.name}</h1>
-        <h2>{request.method} {request.url}</h2>
-        <button class="delete" on:click={() => deleteHandler(i)}>Delete</button>
+      <div class="flex">
+        <div class="flex-grow truncate">
+          <h1 class="text-lg">{request.name}</h1>
+          <h2 class="text-sm font-light">{request.method} {request.url}</h2>
+        </div>
+        <Button
+          class="flex-shrink p-1"
+          href="#delete"
+          on:click={() => deleteHandler(i)}>X</Button
+        >
       </div>
     </a>
   {/each}
-  <a class="request-list-item add" on:click={() => addHandler()} href="#add">
-    <div>+ New request</div>
-  </a>
+  <Button class="w-full" on:click={() => addHandler()} href="#add"
+    >+ New Request</Button
+  >
 </Sidebar>
-
-<style>
-  .request-list-item {
-    display: block;
-    border: 1px solid darkgray;
-    border-radius: 1em;
-    padding: 1em;
-    margin-bottom: 0.5em;
-  }
-  .request-list-item > div {
-    user-select: none;
-    box-sizing: border-box;
-    height: auto;
-    overflow: visible;
-  }
-
-  .request-list-item:last-of-type {
-    margin-bottom: 0;
-  }
-
-  .request-list-item:link,
-  .request-list-item:visited,
-  .request-list-item:hover,
-  .request-list-item:focus,
-  .request-list-item:active {
-    color: inherit;
-  }
-
-  .request-list-item.selected {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .request-list-item * {
-    text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow-x: hidden;
-  }
-
-  .request-list-item h1 {
-    margin: 0;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    font-size: 2em;
-    font-weight: normal;
-  }
-
-  .request-list-item h2 {
-    margin: 0;
-    padding-bottom: 0.5em;
-    font-size: 1.2em;
-    font-weight: normal;
-  }
-
-  .request-list-item .delete {
-    width: 100%;
-  }
-  .request-list-item .delete:hover {
-    background-color: red;
-  }
-
-  .request-list-item:not(.selected):hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-</style>
