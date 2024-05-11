@@ -7,6 +7,8 @@
     type Response,
   } from "@tauri-apps/api/http";
 
+  import shellEscape from "shell-escape";
+
   export enum HttpVerb {
     GET = "GET",
     POST = "POST",
@@ -63,6 +65,24 @@
 
       let client = await getClient();
       return client.request(options);
+    }
+
+    asCurl(): string {
+      let command = ["curl", "--request", this.method];
+
+      for (let header of this.headers) {
+        command.push("--header");
+        command.push(`${header.name}: ${header.value}`);
+      }
+
+      if (this.body) {
+        command.push("--data");
+        command.push(this.body);
+      }
+
+      command.push(this.url);
+
+      return shellEscape(command);
     }
   }
 </script>

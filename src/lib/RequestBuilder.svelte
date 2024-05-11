@@ -81,6 +81,15 @@
             placeholder="Body"
           />
         </TabItem>
+        <TabItem title="Curl Command">
+          <Textarea
+            name="body"
+            class="block w-full rounded-t-none font-mono"
+            rows="3"
+            disabled
+            value={request.asCurl()}
+          />
+        </TabItem>
       </Tabs>
     </div>
     <hr class="mb-5 mt-5" />
