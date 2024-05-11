@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "Deliverator",
+    "productName": "Deliverator"
   },
   "tauri": {
     "allowlist": {
