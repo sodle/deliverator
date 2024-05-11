@@ -18,8 +18,8 @@
 
   import { Request, HttpVerb } from "./Request.svelte";
   import { type ResponseType, type Response } from "@tauri-apps/api/http";
-    import { afterUpdate } from "svelte";
-    import { appWindow } from "@tauri-apps/api/window";
+  import { afterUpdate } from "svelte";
+  import { appWindow } from "@tauri-apps/api/window";
 
   export let request: Request | undefined;
   let response: Response<ResponseType.Text> | undefined;
@@ -30,7 +30,7 @@
     } else {
       appWindow.setTitle("Deliverator: REST Client");
     }
-  })
+  });
 </script>
 
 <main class="m-5 w-2/3 overflow-auto">
@@ -113,7 +113,9 @@
         class="m-5 mt-0 rounded-md bg-gray-50 py-2 text-gray-900 dark:bg-gray-700 dark:text-white"
       >
         <h1 class="mx-5 text-gray-900 dark:text-white">Body</h1>
-        <div class="m-5 font-mono text-gray-800 dark:text-gray-50">{response.data}</div>
+        <div class="m-5 font-mono text-gray-800 dark:text-gray-50">
+          {response.data}
+        </div>
       </div>
     {/if}
   {:else}
